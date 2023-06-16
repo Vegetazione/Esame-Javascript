@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esame Jacopo</title>
+    
+</head>
+<body>
+    <script>
+{
+    /* Level: EASY (1pt per esercizio)
+Ex 1: Set + algoritmi
+crea una funzione che prende in ingresso due set di 5 parole e restituisce la differenza tra il
+numero di parole aventi lunghezza pari presenti nel primo set e il numero di parole che terminano
+in 'a' presenti nel secondo set.
+chiamare la funzione con valori a piacere per stampare il risultato.   */
+
+
+const set1 = new Set(['penna', 'banana', 'mac', 'melone', 'tavolo']);
+const set2 = new Set(['penne', 'librone', 'finestrone', 'porta', 'piante']);
+
+let pari = 0;
+let strA = 0;
+
+function diff(set1, set2) {
+    set1.forEach((el) => {
+        if (el.length % 2 == 0) {
+             pari++;
+        }
+    });
+
+            for (let parola of set2) {
+                if (parola[parola.length - 1] === 'a') {
+                    strA++;
+                }
+            }
+            //console.log(pari)
+            //console.log(strA)
+            return pari - strA;
+        }
+
+        console.log(diff(set1, set2));
+        console.log("---------------------------------------------");
+    }
+{
+
+    /* Ex 2: Funzioni + array + oggetti + algoritmi
+Scrivi una funzione che prenda in input un array di 3 oggetti rappresentanti persone (nome,
+cognome, età) e restituisca un nuovo array contenente le 3 persone ordinate per età crescente
+(dal più giovane al più anziano).
+Chiamare la funzione per produrre l'array, e successivamente iterare su questo array per stampare
+le informazioni di tutte e 3 le persone.
+Ad esempio:
+dammiPersoneOrdinate ( [ {mario rossi, 32}, {luigi verdi, 25}, {peach pink, 30} ] )
+produce: [{luigi verdi, 25}, {peach pink, 30}, {mario rossi, 32}, ] */
+
+const people = [
+  {nome: 'mario', cognome: 'rossi', età: 32}, 
+  {nome: 'luigi', cognome: 'verdi', età: 25},
+  {nome: 'peach', cognome: 'pink', età: 30}
+]
+
+function orderPeople(people) {
+  const p1 = people[0], p2 = people[1], p3 = people[2]
+  let oldest = null, youngest = null, medium = null
+    
+  // trova piu anziano
+  oldest = (p1.età > p2.età)
+     ? (p1.età > p3.età) ? p1 : p3
+     : (p2.età > p3.età) ? p2 : p3
+  
+  // trova meno anziano
+  youngest = (p1.età < p2.età)
+     ? (p1.età < p3.età) ? p1 : p3
+     : (p2.età < p3.età) ? p2 : p3
+  
+  // trova il medio (filtra il più anziono e il piu giovane per ottenere un array, prendi l'el 0)
+  medium = people.filter(p => p != youngest && p!= oldest)[0]
+  return [youngest, medium,  oldest]
+}
+
+// stampa
+orderPeople(people).forEach(p => console.log(p))
+
+console.log("---------------------------------------------");
+}
+{
+
+    /*Ex 3: Map + algoritmi
+Crea un array di 6 stringhe a piacere.
+Successivamente, crea una mappa che avrà come chiavi le parole contenute nell'array e per valori
+le loro lunghezze.
+Itera sulla mappa per stampare, per ogni coppia al suo interno, la frase:
+la parola … contiene … caratteri
+  */
+ let parole = ['ciao', 'banana', 'mac', 'javascript', 'calcolatrice', 'computer'];
+
+
+const mappa = new Map(parole.map(parola => [parola, parola.length]));
+
+mappa.forEach((lunghezza, parola) => {
+  console.log(`la parola ${parola} contiene ${lunghezza} caratteri`);
+});
+
+console.log("---------------------------------------------");
+}
+{
+/* ex4 
+Dato il seguente JSON:
+{
+"date1": "1990-10-10",
+"date2": "1980-10-10",
+"date3": "1970-10-10",
+"date4": "1960-10-10"
+}
+trova la strategia corretta per stampare in output la data più "piccola" e la data più "grande" tra
+quelle fornite*/
+
+let json = `
+    {
+    "date1": "1990-10-10",
+    "date2": "1980-10-10",
+    "date3": "1970-10-10",
+    "date4": "1960-10-10"
+}`
+
+const date = JSON.parse(json);
+
+const dateArray = [];
+
+for (const key in date) {
+  dateArray.push(date[key]);
+}
+//ordino
+dateArray.sort();
+
+console.log(dateArray);
+console.log(`La data più piccola è ${dateArray[0]}`);
+console.log(`La data più grande è ${dateArray[dateArray.length - 1]}`);
+
+console.log("---------------------------------------------");
+}
+{
+    /* 
+    Ex 5: Algoritmi
+Data una stringa s a piacere, stampare solo i caratteri univoci, ovvero i caratteri che compaiono
+SOLO una volta nella lista.
+Ad esempio:
+abbazia -> zi
+    
+    */
+function stampaCaratteri(str) {
+const contatore={}
+const univoci=[]
+
+    for (let i = 0; i < str.length; i++) {
+        let lettera = str[i];
+        if (contatore[lettera]) {
+            contatore[lettera]++
+        }
+        else{
+            contatore[lettera]=1
+        }
+       
+    }
+    //console.log(contatore);
+
+    for (const lettera in contatore) {
+        if (contatore[lettera] ===1) {
+            univoci.push(lettera)
+            
+        }
+    }
+
+    console.log(univoci.join(""));
+
+   }
+
+
+let string="abbazia"
+stampaCaratteri(string)
+
+console.log("---------------------------------------------");
+}
+{
+    /* ex MEDIUM1 
+    Ex 1: Array + algoritmi
+crea un array di 6 numeri interi e stampa in console la differenza tra il numero di numeri maggiori
+di 10 e il numero di numeri inferiori a 1.
+Inoltre, se il valore calcolato è pari a 0, stampa tutti i numeri dell'array in senso invertito,
+altrimenti, stampa solo il primo e l'ultimo numero dell'array
+    */
+const array = [25, 15, 1, -4, -25, -2];
+
+let maggiori10 = 0;
+let minori1 = 0;
+let risultato = []
+for (const numero of array) {
+  if (numero > 10) {
+    maggiori10++;
+  }
+
+  if (numero < 1) {
+    minori1++;
+  }
+}
+ //console.log(maggiori10);
+const differenza = maggiori10 - minori1;
+console.log(differenza);
+
+if (differenza == 0) {
+  for (let i = array.length - 1; i >= 0; i--) {
+    risultato += array[i] + " ";
+  }
+  console.log([risultato]);
+}
+
+else {
+  console.log(`[${array[0]}, ${array[array.length - 1]}]`);
+}
+
+console.log("---------------------------------------------");
+}
+{
+    /* EX N2
+    Ex 2: Array + funzioni + oggetti + algoritmi
+crea una funzione che prende in ingresso due set di 5 numeri e restituisce un oggetto.
+Questo oggetto avrà le seguenti proprietà:
+winner -> avrà valore 1 se il primo set ha più proprietà del secondo, altrimenti 2, e 0 se hanno
+numero pari di proprietà
+morePositive: avrà valore 1 se il primo set ha più numeri positivi (> 0) del secondo, altrimenti 2, e 0
+se hanno numero pari di proprietà
+chiama la funzione per stampare proprietà e valori dell'oggetto restituito
+    */
+
+const mySet1 = new Set([1, 2, 3, 4]);
+const mySet2 = new Set([-1, -2, -3, -4,-6]);
+let contatore1=0
+let contatore2=0
+let set1Positivo=0
+let set2Positivo=0
+let obj={
+    winner:0,
+    morePositive:0
+    }
+function migliorSet(set1,set2) {
+     for (const num of set1) {
+        if(num>0){
+            set1Positivo++
+        }
+        contatore1++
+       // console.log(num);
+     }
+
+     for (const num2 of set2) {
+        if(num2>0){
+            set2Positivo++
+        }
+        contatore2++
+        //console.log(num2);
+     }
+     
+     //winner
+     if (contatore1>contatore2) {
+        obj.winner=1
+     }
+     else if (contatore2<contatore1) {
+        obj.winner=2
+     }
+     else
+     obj.winner=0
+
+     //positivo
+     if (set1Positivo > set2Positivo) {
+        obj.morePositive=1
+     }
+     else if(set1Positivo< set2Positivo){
+        obj.morePositive=2
+     }
+     else
+     obj.morePositive=0
+
+return obj
+}
+
+
+
+let risultato=migliorSet(mySet1,mySet2)
+console.log(risultato);
+
+console.log("---------------------------------------------");
+
+}
+
+{
+/* EX N3
+x 3: Funzioni + oggetti + algoritmi
+crea una funzione che prende in ingresso 2 oggetti che rappresentano due rettangoli, che avranno
+questa struttura: {x: valore numerico, y: valore numerico}, e una stringa che può avere i seguenti
+valori:
+- perimetro
+- area
+Se il terzo parametro ha valore 'perimetro' la funzione restituisce la differenza tra il perimetro del
+primo rettangolo e il perimetro del secondo rettangolo.
+Se il terzo parametro ha valore 'area' la funzione restituisce la somma tra l'area del primo
+rettangolo e l'area del secondo rettangolo.
+Ad esempio:
+opeRettangolo( rect1, rect2, 'area' ) -> risultato
+opeRettangolo( rect1, rect2, 'perimetro' ) -> risultato
+Chiama la funzione 2 volte per stampare i valori prodotti, usando valori a piacere.
+*/
+function rettangoli(rett1,rett2,fn) {
+    let perimetro1=trovaPerimetro(rett1)
+    let perimetro2=trovaPerimetro(rett2)
+    let area1=trovaArea(rett1)
+    let area2=trovaArea(rett2);
+
+    if (fn ==="perimetro") {
+        return (perimetro1 - perimetro2)
+    }
+    if (fn ==="area") {
+        return (area1 + area2)
+    }
+    else{
+        let err = "Comando non valido."
+        return (err)
+    }
+    
+}
+//funzione perimetro
+function trovaPerimetro(rettangolo) {
+    return((rettangolo.x + rettangolo.y) * 2 ) 
+}
+//funzione Area
+function trovaArea(rettangolo) {
+   return((rettangolo.x * rettangolo.y)) 
+}
+
+let rett1={ x:10, y:20 }
+let rett2={ x:5, y:10 }
+
+let risultato1=(rettangoli(rett1,rett2,"perimetro"));
+let risultato2=(rettangoli(rett1,rett2,"area"));
+console.log(risultato1);
+console.log(risultato2);
+
+console.log("---------------------------------------------");
+}
+{
+    /* ex n4 MEDI
+    Funzioni di funzioni + algoritmi
+Creare una funzione chiamata opeStringa che accetta 2 parametri:
+- una stringa
+- una funzione che prende in ingresso una stringa e restituisce una nuova stringa,
+trasformata
+La funzione opeStringa deve restituire la stringa prodotta dalla funzione passata come secondo
+parametro.
+In fase di chiamata di opeStringa, operare nel seguente modo:
+- chiamare opeStringa con una stringa "javascript" e una funzione che produca la versione
+maiuscola
+- chiamare opeStringa con una stringa "javascript" e una funzione che produca una stringa
+contenente solo i caratteri alla posizione dispari
+- chiamare opeStringa con una stringa "javascript" e una funzione che produca la stringa
+invertita
+Ad esempio:
+s = javascript
+opeStringa(s, uc) -> produce JAVASCRIPT
+opeStringa(s, odd) -> produce aacit
+opeStringa(s, invert) -> produce tpircsavaj
+Stampare in output i risultati.
+
+    */
+   //MAIN FN
+   function opeStringa(stringa,fn) {
+    return fn(stringa)
+   }
+
+   //FN MAIUSC
+   function uc(stringa) {
+    return stringa.toUpperCase()
+   }
+
+   //FN DISPARI
+   function odd(stringa) {
+    let nuovaStringa = "";
+         for (let i = 0; i < stringa.length; i++) {
+             if (i % 2 !== 0) {
+                nuovaStringa += stringa[i];
+            }
+        }
+    return nuovaStringa;
+}
+
+
+   //FN INVERTI
+   function invert(stringa) {
+        let strInvertita = "";
+        for (let i = stringa.length - 1; i >= 0; i--) {
+            strInvertita += stringa.charAt(i);
+        }
+    return strInvertita;
+  }
+
+let s="javascript"
+console.log(opeStringa(s,uc));
+console.log(opeStringa(s,odd));
+console.log(opeStringa(s,invert));
+
+console.log("---------------------------------------------");
+
+}
+{/* HARD
+Level: HARD (4pt per esercizio)
+
+Dato il seguente JSON:
+[{
+"autore": "mario rossi",
+"titolo": "jerry potter",
+"data": "1990-10-10"
+},
+{
+"autore": "luigi verdi",
+"titolo": "la storia finita",
+"data": "1960-10-10"
+},
+{
+"autore": "peach rosi",
+"titolo": "metti la cera",
+"data": "1970-10-10"
+},
+{
+"autore": "mario rossi",
+"titolo": "togli la cerca",
+"data": "1980-10-10"
+},
+{
+"autore": "luigi verdi",
+"titolo": "mma kid",
+"data": "1950-10-10"
+},
+{
+"autore": "lucia bianchi",
+"titolo": "javascript non è java",
+"data": "1940-10-10"
+},
+{
+"autore": "anna neri",
+"titolo": "java non è javascript",
+"data": "1930-10-10"
+}
+]
+che rappresenta un array di oggetti rappresentanti libri con le proprietà "titolo", "autore" e "data",
+scrivi una funzione che prenda in input l'array e restituisca un nuovo array di oggetti contenente
+solo i libri scritti da autori diversi, per evitare che ci siano nell'array oggetti con autori identici.
+L'array contiene quindi 1 libro per autore, il primo trovato nel parsing.
+Dall'array prodotto dalla funzione stampare il libro più vecchio e il libro più recente.
+    
+    */
+let jsonStr=`
+[
+{
+"autore": "mario rossi",
+"titolo": "jerry potter",
+"data": "1990-10-10"
+},
+{
+"autore": "luigi verdi",
+"titolo": "la storia finita",
+"data": "1960-10-10"
+},
+{
+"autore": "peach rosi",
+"titolo": "metti la cera",
+"data": "1970-10-10"
+},
+{
+"autore": "mario rossi",
+"titolo": "togli la cerca",
+"data": "1980-10-10"
+},
+{
+"autore": "luigi verdi",
+"titolo": "mma kid",
+"data": "1950-10-10"
+},
+{
+"autore": "lucia bianchi",
+"titolo": "javascript non è java",
+"data": "1940-10-10"
+},
+{
+"autore": "anna neri",
+"titolo": "java non è javascript",
+"data": "1930-10-10"
+}
+]
+`
+const obj=JSON.parse(jsonStr)
+let nuoviAutori=[]
+let libriNuovi=[]
+function trovaLibri(obj) {
+   //foreach sull obj
+    obj.forEach(libro => {
+        if (nuoviAutori.includes(libro.autore)==false) {
+            nuoviAutori.push(libro.autore) //pusho entrambi i dati
+            libriNuovi.push(libro)
+        }
+    });
+    //metto tutto in ordine
+    let libroInOrdine=libriNuovi.sort((a,b) => a.data - b.data)
+    
+    //console.log(libroInOrdine);
+
+
+    //Il primo ad indice 0 è quello piu recente length -1 il piu vecchio
+    const libroPiuRecente = libroInOrdine[0];
+    const libroPiuVecchio = libroInOrdine[libroInOrdine.length - 1];
+    //stampo
+    console.log("Libro più vecchio:", libroPiuVecchio);
+    console.log("Libro più recente:", libroPiuRecente);
+
+  return libroInOrdine;
+}
+
+const libriFiltrati = trovaLibri(obj);
+console.log("Libri filtrati:", libriFiltrati);
+
+}
+    
+
+    </script>
+</body>
+</html>

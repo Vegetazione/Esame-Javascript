@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esame Jacopo Perna</title>
+</head>
+<body>
+
+    <input type="text" id="sfondo" placeholder="Inserisci Colore Sfondo">
+    <input type="text" id="testo" placeholder="Inserisci Colore Testo">
+    <input type="text" id="contenuto" placeholder="Contenuto" >
+    <button id="btn">Crea</button>
+
+    <div id="container">
+
+    </div>
+
+    <script>
+   
+    const btn = document.getElementById('btn')
+    const sfondoInput = document.getElementById('sfondo');
+    const testoInput = document.getElementById('testo');
+    const contenutoInput = document.getElementById('contenuto');
+    const sfondo = sfondoInput.value;
+    const testo = testoInput.value;
+    const contenuto = contenutoInput.value; 
+    
+    
+    btn.addEventListener("click",function() {
+    const nuovoDiv=document.createElement("div")
+    nuovoDiv.style.width="200px"
+    nuovoDiv.style.height="200px"
+    nuovoDiv.style.margin="20px"
+    nuovoDiv.style.backgroundColor=sfondo
+    nuovoDiv.style.color=testo
+    nuovoDiv.textContent=contenuto
+   
+    
+    const container=document.getElementById("container")
+    container.appendChild(nuovoDiv)
+
+
+   })
+    </script>
+</body>
+</html>
